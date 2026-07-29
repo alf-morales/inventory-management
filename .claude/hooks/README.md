@@ -56,6 +56,35 @@ grep "Tool: Bash" .claude/logs/*.log
 - Lints JavaScript/Vue files with `eslint`
 - Blocks commits if linting fails
 
+### 3. Env File Commit Guard (`no-env-commit.py`)
+
+**Purpose**: Prevents `.env` files from ever entering git history. This repository
+is public, so a committed `.env` is an immediate credential leak.
+
+**Trigger**: Runs before every Bash tool call (`PreToolUse`, matcher `Bash`).
+
+**Configuration**: Enabled in `.claude/settings.json` (project level, committed so
+the guard applies to everyone on the team).
+
+**What it blocks**:
+- An env file passed to `git add` / `git stage` / `git commit` / `git mv`, including
+  `git add -f .env`, which bypasses `.gitignore`
+- Any `git commit` while an env file is already staged
+- `git commit -a` while a tracked env file has been modified
+
+It sees through common command shapes: `cd server && git add .env`,
+`git -C /repo add .env`, `command git add .env`, and `echo hi; git add .env`.
+
+**What it allows**:
+- `.env.example`, `.env.sample`, `.env.template`, `.env.dist` - templates are meant
+  to be committed, and this repo tracks `.env.example` on purpose
+- Reading or writing env files (`cat .env`, `echo FOO=1 > .env`)
+- Commit messages that merely mention `.env`, e.g. `git commit -m "update .env handling"`
+- Cleanup commands: `git rm --cached .env`, `git restore --staged .env`
+
+**Note**: `.gitignore` already lists `.env`. This hook is the backstop for the cases
+`.gitignore` does not cover - force-adds and files that were already staged.
+
 ## Disabling Hooks
 
 To temporarily disable a hook, you can:
