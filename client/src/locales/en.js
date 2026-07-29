@@ -6,6 +6,7 @@ export default {
     orders: 'Orders',
     finance: 'Finance',
     demandForecast: 'Demand Forecast',
+    restocking: 'Restocking',
     companyName: 'Catalyst Components',
     subtitle: 'Inventory Management System'
   },
@@ -106,6 +107,8 @@ export default {
     title: 'Orders',
     description: 'View and manage customer orders',
     allOrders: 'All Orders',
+    submittedOrders: 'Submitted Orders',
+    leadTimeDays: '{days} days',
     totalOrders: 'Total Orders',
     totalRevenue: 'Total Revenue',
     avgOrderValue: 'Avg Order Value',
@@ -125,7 +128,47 @@ export default {
       totalValue: 'Total Value',
       status: 'Status',
       expectedDelivery: 'Expected Delivery',
-      actualDelivery: 'Actual Delivery'
+      actualDelivery: 'Actual Delivery',
+      leadTime: 'Lead Time'
+    }
+  },
+
+  // Restocking
+  restocking: {
+    title: 'Restocking',
+    description: 'Set a budget and order the items your demand forecast says you need',
+    budgetTitle: 'Available Budget',
+    budgetLabel: 'Budget',
+    allocated: 'Allocated',
+    remaining: 'Remaining',
+    overBudget: 'Over Budget',
+    itemsSelected: 'Items Selected',
+    recommendations: 'Recommended Items',
+    resetSelection: 'Reset to Recommended',
+    placeOrder: 'Place Order',
+    placingOrder: 'Placing Order...',
+    orderPlaced: 'Order {orderNumber} submitted',
+    orderPlacedDetail: '{count} items totaling {total}, expected {date}',
+    viewInOrders: 'View in Orders',
+    submitFailed: 'Failed to place order',
+    loadFailed: 'Failed to load restocking recommendations',
+    noRecommendations: 'No items need restocking for the current filters',
+    selectAtLeastOne: 'Select at least one item to place an order',
+    reduceSelection: 'Selection exceeds the available budget',
+    leadTimeDays: '{days} days',
+    totalLabel: 'Selected Total',
+    table: {
+      select: 'Select',
+      sku: 'SKU',
+      itemName: 'Item Name',
+      warehouse: 'Warehouse',
+      trend: 'Trend',
+      forecast: 'Forecast',
+      inStock: 'In Stock',
+      restockQty: 'Restock Qty',
+      unitCost: 'Unit Cost',
+      lineCost: 'Line Cost',
+      leadTime: 'Lead Time'
     }
   },
 
@@ -204,6 +247,7 @@ export default {
     shipped: 'Shipped',
     processing: 'Processing',
     backordered: 'Backordered',
+    submitted: 'Submitted',
     inStock: 'In Stock',
     lowStock: 'Low Stock',
     adequate: 'Adequate'

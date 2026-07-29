@@ -26,6 +26,36 @@ class TestDemandEndpoints:
             assert "trend" in forecast
             assert "period" in forecast
 
+    def test_demand_forecasts_have_restocking_fields(self, client):
+        """Test that forecasts expose the fields the restocking tab needs.
+
+        Guards against the Pydantic response_model silently stripping these
+        fields if the JSON data and the DemandForecast model drift apart.
+        """
+        response = client.get("/api/demand")
+        data = response.json()
+
+        for forecast in data:
+            for field in ["category", "warehouse", "current_stock", "unit_cost", "lead_time_days"]:
+                assert field in forecast, f"{forecast['item_sku']} is missing {field}"
+
+    def test_demand_forecast_restocking_field_values(self, client):
+        """Test that the restocking fields hold valid values."""
+        response = client.get("/api/demand")
+        data = response.json()
+
+        valid_warehouses = ["San Francisco", "London", "Tokyo"]
+        valid_categories = [
+            "Actuators", "Circuit Boards", "Controllers", "Power Supplies", "Sensors"
+        ]
+
+        for forecast in data:
+            assert forecast["warehouse"] in valid_warehouses
+            assert forecast["category"] in valid_categories
+            assert forecast["current_stock"] >= 0
+            assert forecast["unit_cost"] > 0
+            assert 7 <= forecast["lead_time_days"] <= 14
+
     def test_demand_forecast_trends(self, client):
         """Test that demand forecasts have valid trend values."""
         response = client.get("/api/demand")

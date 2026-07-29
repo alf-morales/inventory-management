@@ -35,5 +35,11 @@ recent_transactions = load_json_file('transactions.json')
 # Load purchase orders
 purchase_orders = load_json_file('purchase_orders.json')
 
+# Restocking orders submitted at runtime. Intentionally not backed by a JSON file:
+# this list is in-memory only and resets when the server restarts. It is kept
+# separate from `orders` so the 250-record corpus, the dashboard totals, and the
+# /api/reports/* endpoints (which hard-code 2025) stay untouched.
+submitted_orders = []
+
 # All data is now loaded from JSON files in the data/ directory
 # This allows for easier maintenance and updates of the sample data

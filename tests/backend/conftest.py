@@ -12,6 +12,7 @@ server_path = Path(__file__).parent.parent.parent / "server"
 sys.path.insert(0, str(server_path))
 
 from main import app
+from mock_data import submitted_orders
 
 
 @pytest.fixture
@@ -19,6 +20,21 @@ def client():
     """Create a test client for the FastAPI application."""
     with TestClient(app) as test_client:
         yield test_client
+
+
+@pytest.fixture(autouse=True)
+def reset_submitted_orders():
+    """Keep runtime-submitted restocking orders from leaking between tests.
+
+    submitted_orders is a module-level list, so a POST in one test would
+    otherwise survive for the whole pytest process and make order-number
+    assertions depend on test ordering. Clear on both sides of the yield so a
+    test that raises cannot poison the next one, and always clear in place:
+    rebinding would leave main.py holding the original list.
+    """
+    submitted_orders.clear()
+    yield
+    submitted_orders.clear()
 
 
 @pytest.fixture
@@ -35,6 +51,19 @@ def sample_inventory_item():
         "unit_cost": 24.99,
         "location": "Warehouse A-12",
         "last_updated": "2025-09-30T10:30:00"
+    }
+
+
+@pytest.fixture
+def sample_restock_request():
+    """Sample restocking order request body for testing."""
+    return {
+        "budget": 22000,
+        "items": [
+            {"item_sku": "WDG-001", "quantity": 375},
+            {"item_sku": "GSK-203", "quantity": 450},
+            {"item_sku": "CTL-330", "quantity": 66}
+        ]
     }
 
 
