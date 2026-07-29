@@ -6,6 +6,7 @@ export default {
     orders: '注文',
     finance: '財務',
     demandForecast: '需要予測',
+    restocking: '補充発注',
     companyName: '触媒コンポーネンツ',
     subtitle: '在庫管理システム'
   },
@@ -106,6 +107,8 @@ export default {
     title: '注文',
     description: '顧客注文の表示と管理',
     allOrders: 'すべての注文',
+    submittedOrders: '送信済み発注',
+    leadTimeDays: '{days}日',
     totalOrders: '総注文数',
     totalRevenue: '総収益',
     avgOrderValue: '平均注文額',
@@ -125,7 +128,47 @@ export default {
       totalValue: '合計金額',
       status: 'ステータス',
       expectedDelivery: '予定配達日',
-      actualDelivery: '実際の配達日'
+      actualDelivery: '実際の配達日',
+      leadTime: 'リードタイム'
+    }
+  },
+
+  // Restocking
+  restocking: {
+    title: '補充発注',
+    description: '予算を設定し、需要予測に基づいて必要な品目を発注します',
+    budgetTitle: '利用可能予算',
+    budgetLabel: '予算',
+    allocated: '割当額',
+    remaining: '残額',
+    overBudget: '予算超過',
+    itemsSelected: '選択品目数',
+    recommendations: '推奨品目',
+    resetSelection: '推奨内容に戻す',
+    placeOrder: '発注する',
+    placingOrder: '発注処理中...',
+    orderPlaced: '発注 {orderNumber} を送信しました',
+    orderPlacedDetail: '{count}件、合計{total}、予定配達日 {date}',
+    viewInOrders: '注文タブで確認',
+    submitFailed: '発注に失敗しました',
+    loadFailed: '補充推奨の読み込みに失敗しました',
+    noRecommendations: '現在のフィルタでは補充が必要な品目はありません',
+    selectAtLeastOne: '発注するには品目を1つ以上選択してください',
+    reduceSelection: '選択内容が利用可能予算を超えています',
+    leadTimeDays: '{days}日',
+    totalLabel: '選択合計',
+    table: {
+      select: '選択',
+      sku: 'SKU',
+      itemName: '品目名',
+      warehouse: '倉庫',
+      trend: 'トレンド',
+      forecast: '予測需要',
+      inStock: '在庫数',
+      restockQty: '補充数量',
+      unitCost: '単価',
+      lineCost: '小計',
+      leadTime: 'リードタイム'
     }
   },
 
@@ -204,6 +247,7 @@ export default {
     shipped: '出荷済み',
     processing: '処理中',
     backordered: 'バックオーダー',
+    submitted: '送信済み',
     inStock: '在庫あり',
     lowStock: '在庫僅少',
     adequate: '適量'
@@ -328,6 +372,14 @@ export default {
 
   // Product Names
   productNames: {
+    // Demand forecast items surfaced by the Restocking tab
+    'Industrial Widget Type A': '産業用ウィジェットAタイプ',
+    'Steel Bearing Assembly': 'スチールベアリング組立',
+    'High-Temperature Gasket': '高温用ガスケット',
+    'Electric Motor 5HP': '電動モーター5馬力',
+    'Oil Filter Cartridge': 'オイルフィルターカートリッジ',
+    'Pressure Relief Valve': '圧力逃がし弁',
+    'Logic Controller Board': 'ロジックコントローラー基板',
     'Single Layer PCB Assembly': '単層PCB組立',
     'Dual Layer PCB Assembly': '二層PCB組立',
     'Multi Layer PCB Assembly': '多層PCB組立',
